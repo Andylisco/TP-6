@@ -24,7 +24,7 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel contentPane;
 	private static DefaultListModel<ArrayList> DlModel;
 
-	/**
+	
 	 
 	 
 	public static void main(String[] args) {
@@ -39,7 +39,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 	}
-	 */
+	 
 	
 	/**
 	 * Create the frame.
@@ -56,6 +56,18 @@ public class VentanaPrincipal extends JFrame {
 		menuBar.add(mnPersona);
 		
 		JMenuItem mntmAgregar = new JMenuItem("Agregar");
+		mntmAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					contentPane.removeAll();
+					
+					
+					pnl_Agregar panel = new pnl_Agregar();
+					//panel.setDefaultListModel(DlModel);
+					contentPane.add(panel);
+					contentPane.repaint();
+					contentPane.revalidate();
+			}
+		});
 		mntmAgregar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.ALT_MASK));
 		mnPersona.add(mntmAgregar);
 		

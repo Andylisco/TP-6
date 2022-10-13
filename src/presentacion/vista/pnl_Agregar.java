@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class pnl_Agregar extends JPanel {
 
@@ -49,6 +51,10 @@ public class pnl_Agregar extends JPanel {
 		txtDni.setColumns(20);
 		
 		btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnAceptar.setBounds(73, 141, 124, 23);
 		add(btnAceptar);
 

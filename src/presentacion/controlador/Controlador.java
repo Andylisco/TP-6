@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import Entidad.Persona;
-import presentacion.vista.PanelAgregarPersonas;
 import presentacion.vista.VentanaPrincipal;
 import presentacion.vista.pnl_Agregar;
 import presentacion.vista.pnl_Eliminar;
@@ -38,10 +37,6 @@ public class Controlador implements ActionListener {
 
 				//Eventos PanelAgregarPersonas
 				 this.PanelAgregar.getBtnAceptar().addActionListener(aa -> Click_btnAceptar(aa));
-				 
-					
-
-				
 				ventanaPrinci.setVisible(true);
 				
 				
