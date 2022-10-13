@@ -36,24 +36,21 @@ public class Controlador implements ActionListener {
 				//
 
 				//Eventos PanelAgregarPersonas
-				 this.PanelAgregar.getBtnAceptar().addActionListener(aa -> Click_btnAceptar(aa));
-				ventanaPrinci.setVisible(true);
-				
-				
-				
+				 this.PanelAgregar.getBtnAceptar().addActionListener(a -> Click_btnAceptar(a));
+				//ventanaPrinci.setVisible(true);		
 	}
 	
 	private void VentanaMenuAgregar(ActionEvent a)
 	{
-		
+		System.out.println("mod1");
 		this.ventanaPrinci.getContentPane().removeAll();				
 		this.ventanaPrinci.getContentPane().add(PanelAgregar);
 		this.ventanaPrinci.getContentPane().repaint();
 		this.ventanaPrinci.getContentPane().revalidate();
 	}
 	
-	private void Click_btnAceptar(ActionEvent aa) {
-			
+	private void Click_btnAceptar(ActionEvent a) {
+		System.out.println("mod2");
 		Persona P = new Persona();
 		P.setNombre(PanelAgregar.getTxtNombre().getText());		
 		P.setApellido(PanelAgregar.getTxtApellido().getText());
@@ -62,6 +59,7 @@ public class Controlador implements ActionListener {
 		PersonaNegocio Pnego = new PersonaNegocioImpl();		
 		if (Pnego.insert(P)) 
 		{
+			System.out.println("mod3");
 			System.out.println("Se grabo con exito el registro.");
 		}
 	}
@@ -102,7 +100,9 @@ public class Controlador implements ActionListener {
 		this.ventanaPrinci.getContentPane().repaint();
 		this.ventanaPrinci.getContentPane().revalidate();
 	}
-
+	public void inicializar() {
+		this.ventanaPrinci.setVisible(true);
+	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub

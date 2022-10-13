@@ -5,6 +5,7 @@ public class Persona {
 	private String Dni;
 	private String Nombre;
 	private String Apellido;
+	
 	public String getDni() {
 		return Dni;
 	}

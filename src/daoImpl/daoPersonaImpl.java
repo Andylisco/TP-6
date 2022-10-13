@@ -13,10 +13,13 @@ public class daoPersonaImpl implements PersonaDao {
 	@Override
 	public boolean insert(Persona persona) {
 		// TODO Auto-generated method stub
+		PreparedStatement pst ;
 		boolean personaAgregada = false;
 		Connection cn = Conexion.getConexion().getSQLConexion();
 		try {
-			PreparedStatement pst = cn.prepareStatement(insert);
+			System.out.println("mod4");
+			pst = cn.prepareStatement(insert);
+			System.out.println(persona.toString());
 			pst.setString(1, persona.getDni());
 			pst.setString(2, persona.getNombre());
 			pst.setString(3, persona.getApellido());

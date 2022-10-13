@@ -23,22 +23,22 @@ public class VentanaPrincipal extends JFrame {
 
 	private JPanel contentPane;
 	private static DefaultListModel<ArrayList> DlModel;
-
+	private JMenuItem mntmAgregar ;
 	
 	 
 	 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaPrincipal frame = new VentanaPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					VentanaPrincipal frame = new VentanaPrincipal();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 	 
 	
 	/**
@@ -55,19 +55,7 @@ public class VentanaPrincipal extends JFrame {
 		JMenu mnPersona = new JMenu("Persona");
 		menuBar.add(mnPersona);
 		
-		JMenuItem mntmAgregar = new JMenuItem("Agregar");
-		mntmAgregar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-					contentPane.removeAll();
-					
-					
-					pnl_Agregar panel = new pnl_Agregar();
-					//panel.setDefaultListModel(DlModel);
-					contentPane.add(panel);
-					contentPane.repaint();
-					contentPane.revalidate();
-			}
-		});
+		mntmAgregar = new JMenuItem("Agregar");
 		mntmAgregar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.ALT_MASK));
 		mnPersona.add(mntmAgregar);
 		
@@ -86,6 +74,14 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+	}
+
+	public JMenuItem getMntmAgregar() {
+		return mntmAgregar;
+	}
+
+	public void setMntmAgregar(JMenuItem mntmAgregar) {
+		this.mntmAgregar = mntmAgregar;
 	}
 
 	public DefaultListModel<ArrayList> getDlModel() {

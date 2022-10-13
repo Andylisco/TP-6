@@ -68,11 +68,15 @@ public class pnl_Agregar extends JPanel {
 
 
 
-	public JTextField getTxtNombre() {
-		return txtNombre;
+	public void setBtnAceptar(JButton btnAceptar) {
+		this.btnAceptar = btnAceptar;
 	}
 
 
+
+	public JTextField getTxtNombre() {
+		return txtNombre;
+	}
 
 
 	public JTextField getTxtApellido() {
@@ -83,8 +87,6 @@ public class pnl_Agregar extends JPanel {
 	public JTextField getTxtDni() {
 		return txtDni;
 	}
-
-
 
 
 	public void setDlModel(DefaultListModel<ArrayList> dlModel) {

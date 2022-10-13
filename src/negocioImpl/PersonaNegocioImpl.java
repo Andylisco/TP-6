@@ -2,15 +2,21 @@ package negocioImpl;
 
 import java.util.List;
 
+import dao.PersonaDao;
+import daoImpl.daoPersonaImpl;
 import Entidad.Persona;
 import negocio.PersonaNegocio;
 
 public class PersonaNegocioImpl implements PersonaNegocio {
-
+	PersonaDao pdao = new daoPersonaImpl();
 	@Override
 	public boolean insert(Persona persona) {
-		System.out.println(persona.toString());
-		return true;
+		boolean estado =false;
+		estado = pdao.insert(persona);
+		if(estado == true) {
+			System.out.println("Negocio");
+		}
+		return estado;
 	}
 
 	@Override

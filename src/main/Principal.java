@@ -21,10 +21,8 @@ public class Principal {
 		VentanaPrincipal vista = new VentanaPrincipal();
 		PersonaNegocio Pnegocio = new PersonaNegocioImpl();
 		
-		
-		
 		Controlador controlador = new Controlador(vista,Pnegocio);
-		
+		controlador.inicializar();
 		
 		
 	}
