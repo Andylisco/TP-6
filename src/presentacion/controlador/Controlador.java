@@ -51,11 +51,10 @@ public class Controlador implements ActionListener {
 	
 	private void Click_btnAceptar(ActionEvent a) {
 		System.out.println("mod2");
-		Persona P = new Persona();
-		P.setNombre(PanelAgregar.getTxtNombre().getText());		
-		P.setApellido(PanelAgregar.getTxtApellido().getText());
-		P.setDni(PanelAgregar.getTxtDni().getText());
-		
+		String nombre = PanelAgregar.getTxtNombre().getText();		
+		String apellido = PanelAgregar.getTxtApellido().getText();
+		String dni = PanelAgregar.getTxtDni().getText();
+		Persona P = new Persona(dni,nombre,apellido);
 		PersonaNegocio Pnego = new PersonaNegocioImpl();		
 		if (Pnego.insert(P)) 
 		{

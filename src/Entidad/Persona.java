@@ -6,6 +6,11 @@ public class Persona {
 	private String Nombre;
 	private String Apellido;
 	
+	public Persona(String dni, String nombre, String apellido) {		
+		Dni = dni;
+		Nombre = nombre;
+		Apellido = apellido;
+	}
 	public String getDni() {
 		return Dni;
 	}
@@ -25,17 +30,6 @@ public class Persona {
 		Apellido = apellido;
 	}
 	
-	
-	public Persona() {		
-		Dni = null;
-		Nombre = null;
-		Apellido = null;
-	}
-	public Persona(String dni, String nombre, String apellido) {		
-		Dni = dni;
-		Nombre = nombre;
-		Apellido = apellido;
-	}
 	
 	@Override
 	public String toString() {

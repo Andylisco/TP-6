@@ -9,7 +9,7 @@ import dao.PersonaDao;
 
 public class daoPersonaImpl implements PersonaDao {
 
-	public static final String insert ="Insert into usuario(dni,nombre,apellido) values(?,?,?)"; 
+	public static final String insert ="Insert into personas(Dni,Nombre,Apellido) values(?,?,?)"; 
 	@Override
 	public boolean insert(Persona persona) {
 		// TODO Auto-generated method stub
