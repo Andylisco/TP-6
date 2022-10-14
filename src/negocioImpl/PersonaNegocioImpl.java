@@ -14,7 +14,8 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 		boolean estado =false;
 		estado = pdao.insert(persona);
 		if(estado == true) {
-			System.out.println("Negocio");
+			//System.out.println("Negocio");
+			estado= true;
 		}
 		return estado;
 	}

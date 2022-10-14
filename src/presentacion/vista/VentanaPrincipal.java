@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.KeyStroke;
@@ -21,6 +23,10 @@ public class VentanaPrincipal extends JFrame {
 
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static DefaultListModel<ArrayList> DlModel;
 	private JMenuItem mntmAgregar ;
@@ -91,5 +97,9 @@ public class VentanaPrincipal extends JFrame {
 	public static void setDlModel(DefaultListModel<ArrayList> dlModel) {
 		DlModel = dlModel;
 	}
-
+	public void mostrarMensaje(String mensaje)
+	{
+		JOptionPane.showMessageDialog(null, mensaje);
+	}
+	
 }

@@ -17,6 +17,7 @@ public class pnl_Agregar extends JPanel {
 	private JTextField txtApellido;
 	private JTextField txtDni;
 	private JButton btnAceptar;
+	private JLabel lblDniNum;
 	/**
 	 * Create the panel.
 	 */
@@ -57,6 +58,10 @@ public class pnl_Agregar extends JPanel {
 		});
 		btnAceptar.setBounds(73, 141, 124, 23);
 		add(btnAceptar);
+		
+		lblDniNum = new JLabel("");
+		lblDniNum.setBounds(341, 86, 69, 20);
+		add(lblDniNum);
 
 	}
 	
@@ -87,6 +92,18 @@ public class pnl_Agregar extends JPanel {
 	public JTextField getTxtDni() {
 		return txtDni;
 	}
+
+
+	public JLabel getLblDniNum() {
+		return lblDniNum;
+	}
+
+
+
+	public void setLblDniNum(JLabel lblDniNum) {
+		this.lblDniNum = lblDniNum;
+	}
+
 
 
 	public void setDlModel(DefaultListModel<ArrayList> dlModel) {

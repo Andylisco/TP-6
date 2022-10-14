@@ -17,9 +17,9 @@ public class daoPersonaImpl implements PersonaDao {
 		boolean personaAgregada = false;
 		Connection cn = Conexion.getConexion().getSQLConexion();
 		try {
-			System.out.println("mod4");
+			//System.out.println("mod4");
 			pst = cn.prepareStatement(insert);
-			System.out.println(persona.toString());
+			//System.out.println(persona.toString());
 			pst.setString(1, persona.getDni());
 			pst.setString(2, persona.getNombre());
 			pst.setString(3, persona.getApellido());
