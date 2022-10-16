@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 import Entidad.Persona;
@@ -83,58 +85,80 @@ public class Controlador implements ActionListener {
 	private void Click_btnAceptar(ActionEvent a) {
 		System.out.println("mod2");
 		String mensaje;
-		String mensajeNombre;
+		System.out.println("Inicia Controlador.Click_btnAceptar");
 		PersonaNegocio Pnego= new PersonaNegocioImpl() ;
-		if(PanelAgregar.getTxtNombre().getText().isEmpty()
-				&& PanelAgregar.getTxtApellido().getText().isEmpty()
-				&& PanelAgregar.getTxtDni().getText().isEmpty()) 
-		{
-			mensaje = "complete todos los campos faltan " ;
-			this.ventanaPrinci.mostrarMensaje(mensaje);
-		}
-			if(PanelAgregar.getTxtNombre().getText().isEmpty()) 
-			{
-				mensaje = "complete todos los campos faltan campo Nombre"  ;
-				this.ventanaPrinci.mostrarMensaje(mensaje);
-			}
-				if(PanelAgregar.getTxtApellido().getText().isEmpty())
+		boolean blPersona = false;
+		boolean validaDni = false;
+		try {
+			//System.out.println("DNI OBTENIDO: " + Pnego.obtenerDni(PanelAgregar.getTxtDni().getText()));
+				if(PanelAgregar.getTxtNombre().getText().isEmpty()
+						&& PanelAgregar.getTxtApellido().getText().isEmpty()
+						&& PanelAgregar.getTxtDni().getText().isEmpty()) 
 				{
-					mensaje = "complete todos los campos falta Apellido" ;
+					mensaje = "complete todos los campos faltan " ;
 					this.ventanaPrinci.mostrarMensaje(mensaje);
 				}
-					if(PanelAgregar.getTxtDni().getText().isEmpty()) 
+					if(PanelAgregar.getTxtNombre().getText().isEmpty()) 
 					{
-						mensaje = "complete todos los campos falta Dni" ;
+						mensaje = "complete todos los campos faltan campo Nombre"  ;
 						this.ventanaPrinci.mostrarMensaje(mensaje);
 					}
-		if (!PanelAgregar.getTxtNombre().getText().isEmpty()
-				&&!PanelAgregar.getTxtApellido().getText().isEmpty()
-				&&!PanelAgregar.getTxtDni().getText().isEmpty() ) 
-		{
-
-			String nombre = PanelAgregar.getTxtNombre().getText();		
-			String apellido = PanelAgregar.getTxtApellido().getText();
-			if (!PanelAgregar.getTxtDni().getText().matches("^[0-9]*$")) {
-				mensaje = "INGRESO INCORRECTO";
-				//System.out.println("Se grabo con exito el registro.");
-				this.ventanaPrinci.mostrarMensaje(mensaje);
-			}	
-			else {
-				String dni = PanelAgregar.getTxtDni().getText();				
-				Persona P = new Persona(dni,nombre,apellido);	
-				if (Pnego.insert(P)) 
-					{
-						mensaje = "Se agrego correctamente";
-//						System.out.println("Se grabo con exito el registro.");
-						this.ventanaPrinci.mostrarMensaje(mensaje);
-					}
-				else {
-					mensaje = "complete todos los campos faltan";
-//					System.out.println("complete todos los campos faltan.");
-					this.ventanaPrinci.mostrarMensaje(mensaje);
-				}
-			}
+						if(PanelAgregar.getTxtApellido().getText().isEmpty())
+						{
+							mensaje = "complete todos los campos falta Apellido" ;
+							this.ventanaPrinci.mostrarMensaje(mensaje);
+						}
+							if(PanelAgregar.getTxtDni().getText().isEmpty()) 
+							{
+								mensaje = "complete todos los campos falta Dni" ;
+								this.ventanaPrinci.mostrarMensaje(mensaje);
+							}
+								if (!PanelAgregar.getTxtNombre().getText().isEmpty()
+										&&!PanelAgregar.getTxtApellido().getText().isEmpty()
+										&&!PanelAgregar.getTxtDni().getText().isEmpty() ) 
+								{								
+									String nombre = PanelAgregar.getTxtNombre().getText();		
+									String apellido = PanelAgregar.getTxtApellido().getText();
+									if (!PanelAgregar.getTxtDni().getText().matches("^[0-9]*$")) {
+										mensaje = "INGRESO INCORRECTO";
+										this.ventanaPrinci.mostrarMensaje(mensaje);										
+								}	
+									else {			validaDni = Pnego.obtenerDni(PanelAgregar.getTxtDni().getText());
+									if (validaDni) {
+										System.out.println("Existe Dni");
+										PanelAgregar.getTxtDni().setText("");
+										mensaje = "Existe Dni";
+										this.ventanaPrinci.mostrarMensaje(mensaje);
+									}
+									else {
+										blPersona = true;
+										System.out.println("No Existe Dni");
+									}
+								if (blPersona) 
+									{
+									String dni = PanelAgregar.getTxtDni().getText();				
+									Persona P = new Persona(dni,nombre,apellido);	
+									if (Pnego.insert(P)) 
+										{	
+										PanelAgregar.getTxtNombre().setText("");
+										PanelAgregar.getTxtApellido().setText("");
+										PanelAgregar.getTxtDni().setText("");
+													mensaje = "Se agrego correctamente";
+													this.ventanaPrinci.mostrarMensaje(mensaje);
+										}
+											else {
+														mensaje = "complete todos los campos faltan";
+														this.ventanaPrinci.mostrarMensaje(mensaje);
+												}
+											}
+									}
+								}
 		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("FIN Controlador.Click_btnAceptar");
 	}
 
 	private void VentanaMenuModificar(ActionEvent m)

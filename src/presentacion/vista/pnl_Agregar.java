@@ -109,5 +109,10 @@ public class pnl_Agregar extends JPanel {
 	public void setDlModel(DefaultListModel<ArrayList> dlModel) {
 		DlModel = dlModel;
 	}
+
+
+
+
+
 	
 }

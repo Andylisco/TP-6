@@ -6,6 +6,9 @@ public class Persona {
 	private String Nombre;
 	private String Apellido;
 	
+	public Persona () {
+		
+	}
 	public Persona(String dni, String nombre, String apellido) {		
 		Dni = dni;
 		Nombre = nombre;
