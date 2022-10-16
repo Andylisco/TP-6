@@ -83,76 +83,19 @@ public class Controlador implements ActionListener {
 	}
 	
 	private void Click_btnAceptar(ActionEvent a) {
-		System.out.println("mod2");
 		String mensaje;
 		System.out.println("Inicia Controlador.Click_btnAceptar");
-		PersonaNegocio Pnego= new PersonaNegocioImpl() ;
-		boolean blPersona = false;
-		boolean validaDni = false;
 		try {
-			//System.out.println("DNI OBTENIDO: " + Pnego.obtenerDni(PanelAgregar.getTxtDni().getText()));
-				if(PanelAgregar.getTxtNombre().getText().isEmpty()
-						&& PanelAgregar.getTxtApellido().getText().isEmpty()
-						&& PanelAgregar.getTxtDni().getText().isEmpty()) 
-				{
-					mensaje = "complete todos los campos faltan " ;
-					this.ventanaPrinci.mostrarMensaje(mensaje);
-				}
-					if(PanelAgregar.getTxtNombre().getText().isEmpty()) 
-					{
-						mensaje = "complete todos los campos faltan campo Nombre"  ;
-						this.ventanaPrinci.mostrarMensaje(mensaje);
-					}
-						if(PanelAgregar.getTxtApellido().getText().isEmpty())
-						{
-							mensaje = "complete todos los campos falta Apellido" ;
-							this.ventanaPrinci.mostrarMensaje(mensaje);
-						}
-							if(PanelAgregar.getTxtDni().getText().isEmpty()) 
-							{
-								mensaje = "complete todos los campos falta Dni" ;
-								this.ventanaPrinci.mostrarMensaje(mensaje);
-							}
-								if (!PanelAgregar.getTxtNombre().getText().isEmpty()
-										&&!PanelAgregar.getTxtApellido().getText().isEmpty()
-										&&!PanelAgregar.getTxtDni().getText().isEmpty() ) 
-								{								
-									String nombre = PanelAgregar.getTxtNombre().getText();		
-									String apellido = PanelAgregar.getTxtApellido().getText();
-									if (!PanelAgregar.getTxtDni().getText().matches("^[0-9]*$")) {
-										mensaje = "INGRESO INCORRECTO";
-										this.ventanaPrinci.mostrarMensaje(mensaje);										
-								}	
-									else {			validaDni = Pnego.obtenerDni(PanelAgregar.getTxtDni().getText());
-									if (validaDni) {
-										System.out.println("Existe Dni");
-										PanelAgregar.getTxtDni().setText("");
-										mensaje = "Existe Dni";
-										this.ventanaPrinci.mostrarMensaje(mensaje);
-									}
-									else {
-										blPersona = true;
-										System.out.println("No Existe Dni");
-									}
-								if (blPersona) 
-									{
-									String dni = PanelAgregar.getTxtDni().getText();				
-									Persona P = new Persona(dni,nombre,apellido);	
-									if (Pnego.insert(P)) 
-										{	
-										PanelAgregar.getTxtNombre().setText("");
-										PanelAgregar.getTxtApellido().setText("");
-										PanelAgregar.getTxtDni().setText("");
-													mensaje = "Se agrego correctamente";
-													this.ventanaPrinci.mostrarMensaje(mensaje);
-										}
-											else {
-														mensaje = "complete todos los campos faltan";
-														this.ventanaPrinci.mostrarMensaje(mensaje);
-												}
-											}
-									}
-								}
+			// se obtiene el mensaje para mostrar en pantalla se llama a la funcion validacionesBtnAceptar
+			mensaje = this.validacionesBtnAceptar(PanelAgregar.getTxtDni().getText(),
+					PanelAgregar.getTxtNombre().getText(), 
+					PanelAgregar.getTxtApellido().getText());
+			//muesta mensaje en pantalla 
+			this.ventanaPrinci.mostrarMensaje(mensaje);
+			// limpia txt
+			PanelAgregar.getTxtDni().setText("");
+			PanelAgregar.getTxtNombre().setText(""); 
+			PanelAgregar.getTxtApellido().setText("");
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -197,22 +140,83 @@ public class Controlador implements ActionListener {
 		this.ventanaPrinci.getContentPane().repaint();
 		this.ventanaPrinci.getContentPane().revalidate();
 	}
+	
 	public void inicializar() {
 		this.ventanaPrinci.setVisible(true);
 	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
-	public String ValidacionesAgregarNombre(String nombre) {
-		String Mensaje= "";
-		if(nombre.isEmpty()) {
-			Mensaje = "INGRESE NOMBRE";
-		}else {
-			Mensaje = nombre;
+	
+	public String validacionesBtnAceptar(String txtDni, String txtNombre, String txtApellido) {
+		String mensaje = "";
+		System.out.println("Inicia Controlador.validacionesBtnAceptar");
+		PersonaNegocio Pnego= new PersonaNegocioImpl() ;
+		boolean blPersona = false;
+		boolean validaDni = false;
+		try {
+				if(txtNombre.isEmpty()&& txtApellido.isEmpty()&& txtDni.isEmpty()) 
+				{
+					return mensaje = "complete todos los campos faltan " ;
+				}
+					if(txtNombre.isEmpty()) 
+					{
+						return mensaje = "complete todos los campos faltan campo Nombre"  ;
+					}
+						if(txtApellido.isEmpty())
+						{
+							return mensaje = "complete todos los campos falta Apellido" ;
+						}
+							if(txtDni.isEmpty()) 
+							{
+								return mensaje = "complete todos los campos falta Dni" ;
+							}
+								if (!txtNombre.isEmpty()
+										&&!txtApellido.isEmpty()
+										&&!PanelAgregar.getTxtDni().getText().isEmpty() ) 
+								{								
+									String nombre = txtNombre;		
+									String apellido = txtApellido;
+									if (!txtDni.matches("^[0-9]*$")) 
+									{
+										return mensaje = "INGRESE SOLO NUMEROS";								
+									}	
+									else 
+									{			
+										validaDni = Pnego.obtenerDni(txtDni);
+										if (validaDni) 
+										{
+											System.out.println("Existe Dni");
+											return mensaje = "Existe Dni";
+										}
+										else 
+										{
+											blPersona = true;
+											System.out.println("No Existe Dni");
+										}
+										if (blPersona) 
+										{
+										String dni = txtDni;				
+										Persona P = new Persona(dni,nombre,apellido);	
+											if (Pnego.insert(P)) 
+											{	
+												return mensaje = "Se agrego correctamente";
+											}
+											else 
+											{
+												return mensaje = "complete todos los campos faltan";
+											}
+										}
+									}
+								}
 		}
-		return Mensaje;
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		
+		System.out.println("FIN Controlador.validacionesBtnAceptar");
+
+		return mensaje;
 	}
 }

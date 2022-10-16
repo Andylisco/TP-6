@@ -100,7 +100,6 @@ public class daoPersonaImpl implements PersonaDao {
 			System.out.println("Parametro: "+dni);
 			if(!dni.isEmpty()) {				
 			ps = cn.prepareStatement(obtenerTodos);
-			//ps.setString(1, dni);
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				System.out.println("Ingresa while");
