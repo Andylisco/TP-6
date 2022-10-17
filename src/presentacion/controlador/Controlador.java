@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
+import java.util.List;
 
 import Entidad.Persona;
 import presentacion.vista.VentanaPrincipal;
@@ -17,6 +18,10 @@ import presentacion.vista.pnl_Modificar;
 import negocio.PersonaNegocio;
 import negocioImpl.PersonaNegocioImpl;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class Controlador implements ActionListener {
 	
@@ -25,6 +30,8 @@ public class Controlador implements ActionListener {
 	private ArrayList<Persona> PersonasEnTablas;
 	private pnl_Agregar PanelAgregar;
 	private pnl_Eliminar PanelEliminar;
+	private pnl_Modificar PanelModificar;
+	private pnl_Listar PanelListar;
 	
 
 	
@@ -34,6 +41,10 @@ public class Controlador implements ActionListener {
 				this.persoNeg = pNeg;
 				//Instancio los paneles
 				this.PanelAgregar = new pnl_Agregar();
+				this.PanelEliminar = new pnl_Eliminar();
+				this.PanelModificar = new pnl_Modificar();
+				this.PanelListar = new pnl_Listar();
+				
 				PanelAgregar.getTxtApellido().addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyTyped(KeyEvent e) {
@@ -76,8 +87,12 @@ public class Controlador implements ActionListener {
 				//Eventos PanelAgregarPersonas
 				 this.PanelAgregar.getBtnAceptar().addActionListener(a -> Click_btnAceptar(a));
 				//ventanaPrinci.setVisible(true);		
+				 
+				
 	}
 	
+	
+
 	private void VentanaMenuAgregar(ActionEvent a)
 	{
 		System.out.println("mod1");
@@ -143,8 +158,38 @@ public class Controlador implements ActionListener {
 		this.ventanaPrinci.getContentPane().repaint();
 		this.ventanaPrinci.getContentPane().revalidate();
 	}
+	
 	private void VentanaMenuListar(ActionEvent l)
 	{
+		
+		PersonaNegocio Pnego = new PersonaNegocioImpl();
+		ArrayList<Persona> Personas = (ArrayList<Persona>) Pnego.GetAll();
+		DefaultTableModel  Modelo;	
+		
+		Modelo = (DefaultTableModel)this.PanelListar.getTablaPersonas().getModel();
+		
+		for (int i = 0; i < Modelo.getRowCount(); i++ )
+		{
+			Modelo.removeRow(i);
+			i = i -1;
+		}
+		
+		Object[] Ob = new Object[3];
+		for (Persona Perso : Personas)
+		{
+			//System.out.println("Cargo " + Perso);
+			Ob[0] = Perso.getNombre();
+			Ob[1] = Perso.getApellido();
+			Ob[2] = Perso.getDni();
+			
+			Modelo.addRow(Ob);	
+		
+		}
+		
+		this.PanelListar.getTablaPersonas().setModel(Modelo);
+		
+		//NO ENTIENDO PORQUE NO MUESTRA LA TABLA> PERO AL PONER LA TABLA EN UN MESSAGE SE ESTA CARGANDO CORRECTAMENTE
+		JOptionPane.showMessageDialog(null, new JScrollPane(this.PanelListar.getTablaPersonas()));
 		
 		this.ventanaPrinci.getContentPane().removeAll();
 			
@@ -154,6 +199,11 @@ public class Controlador implements ActionListener {
 		this.ventanaPrinci.getContentPane().add(panel);
 		this.ventanaPrinci.getContentPane().repaint();
 		this.ventanaPrinci.getContentPane().revalidate();
+		
+					
+		
+	
+		
 	}
 	private void VentanaMenuEliminar(ActionEvent e)
 	{

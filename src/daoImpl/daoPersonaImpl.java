@@ -83,7 +83,7 @@ public class daoPersonaImpl implements PersonaDao {
 	}
 
 	@Override
-	public List<Persona> GetAll() {
+	public ArrayList<Persona> GetAll() {
 		// TODO Auto-generated method stub
 		System.out.println("Inicia daoPersonaImpl.GetAll");
 		PreparedStatement st;
@@ -103,15 +103,16 @@ public class daoPersonaImpl implements PersonaDao {
 		System.out.println("FIN daoPersonaImpl.GetAll");
 		return pers;
 	}
+	
 	public Persona obtenerDni(ResultSet resultSet) throws SQLException {
 		System.out.println("Inicia daoPersonaImpl.obtenerDNI");
 		String dni = resultSet.getString(1);
 		String nombre = resultSet.getString(2);
 		String apellido = resultSet.getString(3);
-		System.out.println("dni: " + dni);		
-		System.out.println("nombre: " + nombre);
-		System.out.println("apellido: " + apellido);
-		System.out.println("FIN daoPersonaImpl.obtenerDNI");
+		//System.out.println("dni: " + dni);		
+		//System.out.println("nombre: " + nombre);
+		//System.out.println("apellido: " + apellido);
+		//System.out.println("FIN daoPersonaImpl.obtenerDNI");
 		return new Persona(dni,nombre, apellido); 
 	}
 
