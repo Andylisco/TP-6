@@ -130,24 +130,7 @@ public class Controlador implements ActionListener {
 			}
 			
 			
-			
-			this.ventanaPrinci.getContentPane().removeAll();			
-			pnl_Modificar panel = this.PanelModificar;		
-			PersonaNegocio Pnegos = new PersonaNegocioImpl();
-			ArrayList<Persona> Personas = (ArrayList<Persona>) Pnegos.GetAll();
-			DefaultListModel<Persona> dlmodel =  (DefaultListModel<Persona>) panel.getListPersona().getModel();
-			for (Persona Perso : Personas) {
 				
-				dlmodel.addElement(Perso);			
-			}
-			
-			
-			panel.setDlModel(dlmodel);		
-		
-			
-			this.ventanaPrinci.getContentPane().add(panel);
-			this.ventanaPrinci.getContentPane().repaint();
-			this.ventanaPrinci.getContentPane().revalidate();
 			/*
 			// limpia txt
 			PanelModificar.getTxtDni().setText("");
