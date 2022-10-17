@@ -31,17 +31,18 @@ public class Controlador implements ActionListener {
 	
 	private VentanaPrincipal ventanaPrinci;
 	private PersonaNegocio persoNeg;
-	private ArrayList<Persona> PersonasEnTablas;
+//	private ArrayList<Persona> PersonasEnTablas;
 	private pnl_Agregar PanelAgregar;
 	private pnl_Eliminar PanelEliminar;
 	private pnl_Modificar PanelModificar;
 	private pnl_Listar PanelListar;
+	private ArrayList<Persona> Personas;
+	private PersonaNegocio Pnego;
 	
-
 	
 	public Controlador(VentanaPrincipal vista, PersonaNegocio pNeg)
 	{
-		this.ventanaPrinci = vista;
+	this.ventanaPrinci = vista;
 				this.persoNeg = pNeg;
 				//Instancio los paneles
 				this.PanelAgregar = new pnl_Agregar();
@@ -84,21 +85,13 @@ public class Controlador implements ActionListener {
 				this.ventanaPrinci.getJMenuBar().getMenu(0).getItem(0).addActionListener(a -> VentanaMenuAgregar(a));
 				
 				this.PanelEliminar.getBtnEliminar().addActionListener(a -> Click_btnEliminar(a));
-				
-				
+					
 				this.ventanaPrinci.getJMenuBar().getMenu(0).getItem(1).addActionListener(m -> VentanaMenuModificar(m));
 				this.ventanaPrinci.getJMenuBar().getMenu(0).getItem(2).addActionListener(e -> VentanaMenuEliminar(e));
 				this.ventanaPrinci.getJMenuBar().getMenu(0).getItem(3).addActionListener(l -> VentanaMenuListar(l));
-				//
-
 				//Eventos PanelAgregarPersonas
 				 this.PanelAgregar.getBtnAceptar().addActionListener(a -> Click_btnAceptar(a));
 				//ventanaPrinci.setVisible(true);		
-				
-			
-				
-					
-				
 	}
 	
 	
@@ -149,7 +142,6 @@ public class Controlador implements ActionListener {
 
 	private void VentanaMenuAgregar(ActionEvent a)
 	{
-		System.out.println("mod1");
 		this.ventanaPrinci.getContentPane().removeAll();				
 		this.ventanaPrinci.getContentPane().add(PanelAgregar);
 		this.ventanaPrinci.getContentPane().repaint();
@@ -202,25 +194,16 @@ public class Controlador implements ActionListener {
 
 	private void VentanaMenuModificar(ActionEvent m)
 	{
-		
 		this.ventanaPrinci.getContentPane().removeAll();
-		
 		pnl_Modificar panel = this.PanelModificar;
-		
-		
 		PersonaNegocio Pnego = new PersonaNegocioImpl();
-		ArrayList<Persona> Personas = (ArrayList<Persona>) Pnego.GetAll();
+		Personas = (ArrayList<Persona>) Pnego.GetAll();
 		DefaultListModel<Persona> dlmodel =  (DefaultListModel<Persona>) panel.getListPersona().getModel();
 		dlmodel.clear();
 		for (Persona Perso : Personas) {
-			
 			dlmodel.addElement(Perso);			
 		}
-		
-		
-		panel.setDlModel(dlmodel);		
-	
-		
+		panel.setDlModel(dlmodel);				
 		this.ventanaPrinci.getContentPane().add(panel);
 		this.ventanaPrinci.getContentPane().repaint();
 		this.ventanaPrinci.getContentPane().revalidate();
@@ -228,48 +211,8 @@ public class Controlador implements ActionListener {
 	
 	private void VentanaMenuListar(ActionEvent l)
 	{
-		
-		PersonaNegocio Pnego = new PersonaNegocioImpl();
-		ArrayList<Persona> Personas = (ArrayList<Persona>) Pnego.GetAll();
-		DefaultTableModel  Modelo;	
-		
-		Modelo = (DefaultTableModel)this.PanelListar.getTablaPersonas().getModel();
-		
-		for (int i = 0; i < Modelo.getRowCount(); i++ )
-		{
-			Modelo.removeRow(i);
-			i = i -1;
-		}
-		
-		Object[] Ob = new Object[3];
-		for (Persona Perso : Personas)
-		{
-			//System.out.println("Cargo " + Perso);
-			Ob[0] = Perso.getNombre();
-			Ob[1] = Perso.getApellido();
-			Ob[2] = Perso.getDni();
-			
-			Modelo.addRow(Ob);	
-		
-		}
-		
-		this.PanelListar.getTablaPersonas().setModel(Modelo);
-		
-		//NO ENTIENDO PORQUE NO MUESTRA LA TABLA> PERO AL PONER LA TABLA EN UN MESSAGE SE ESTA CARGANDO CORRECTAMENTE
-		JOptionPane.showMessageDialog(null, new JScrollPane(this.PanelListar.getTablaPersonas()));
-		
-		this.ventanaPrinci.getContentPane().removeAll();
-			
-		pnl_Listar panel = new pnl_Listar();
-		
-		panel.setDlModel(this.ventanaPrinci.getDlModel());
-		this.ventanaPrinci.getContentPane().add(panel);
-		this.ventanaPrinci.getContentPane().repaint();
-		this.ventanaPrinci.getContentPane().revalidate();
-						
-		
-	
-		
+		System.out.println("PRUEBAJOAQ");
+		this.refrescarTabla();					
 	}
 	private void VentanaMenuEliminar(ActionEvent e)
 	{
@@ -282,6 +225,7 @@ public class Controlador implements ActionListener {
 		this.ventanaPrinci.getContentPane().add(panel);
 		this.ventanaPrinci.getContentPane().repaint();
 		this.ventanaPrinci.getContentPane().revalidate();
+		//this.refrescarTabla();
 	}
 	
 	public void inicializar() {
@@ -405,5 +349,54 @@ public class Controlador implements ActionListener {
 		return mensaje;
 	}
 
+	public void refrescarTabla()
+	{
+		System.out.println("INICIA REFRESCAR TABLA");
+		this.ventanaPrinci.getContentPane().removeAll();
+		pnl_Listar panel = this.PanelListar;
+		PersonaNegocio Pnego = new PersonaNegocioImpl();
+		DefaultTableModel  Modelo;	
+		Personas = (ArrayList<Persona>) Pnego.GetAll();
+			for (Persona p : Personas) {
+				System.out.println(p.getDni());
+			}
+//			PersonaNegocio Pnego = new PersonaNegocioImpl();
+//			ArrayList<Persona> Personas = (ArrayList<Persona>) Pnego.GetAll();
+//			
+			Modelo = (DefaultTableModel)this.PanelListar.getTablaPersonas().getModel();
+			
+			for (int i = 0; i < Modelo.getRowCount(); i++ )
+			{
+				Modelo.removeRow(i);
+				i = i -1;
+			}
+			
+			Object[] Ob = new Object[3];
+			for (Persona Perso : Personas)
+			{
+				//System.out.println("Cargo " + Perso);
+				Ob[0] = Perso.getNombre();
+				Ob[1] = Perso.getApellido();
+				Ob[2] = Perso.getDni();
+				
+				Modelo.addRow(Ob);	
+			
+			}
+			
+			this.PanelListar.getTablaPersonas().setModel(Modelo);
+			
+			//NO ENTIENDO PORQUE NO MUESTRA LA TABLA> PERO AL PONER LA TABLA EN UN MESSAGE SE ESTA CARGANDO CORRECTAMENTE
+			JOptionPane.showMessageDialog(null, new JScrollPane(this.PanelListar.getTablaPersonas()));
+			
+			this.ventanaPrinci.getContentPane().removeAll();
+				
+//			pnl_Listar panel = new pnl_Listar();
+			
+			panel.setDlModel(this.ventanaPrinci.getDlModel());
+			this.ventanaPrinci.getContentPane().add(panel);
+			this.ventanaPrinci.getContentPane().repaint();
+			this.ventanaPrinci.getContentPane().revalidate();
+		//this.ventanaPrinci.setTablaPersonas(this.Personas);
+	}
 
 }

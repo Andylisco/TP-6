@@ -37,6 +37,8 @@ public class pnl_Modificar extends JPanel {
 		
 		DlModel = new DefaultListModel();
 		listPersona = new JList();
+		listPersona.setVisibleRowCount(10);
+		listPersona.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		listPersona.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -47,27 +49,27 @@ public class pnl_Modificar extends JPanel {
 				txtDni.setText(PersonaSeleccionada.getDni());
 			}
 		});
-		listPersona.setBounds(20, 40, 420, 171);
+		listPersona.setBounds(20, 40, 533, 266);
 		add(listPersona);
 		listPersona.setModel(DlModel);
 		
 		txtNombre = new JTextField();
-		txtNombre.setBounds(20, 222, 86, 20);
+		txtNombre.setBounds(35, 322, 86, 20);
 		add(txtNombre);
 		txtNombre.setColumns(10);
 		
 		txtApellido = new JTextField();
-		txtApellido.setBounds(116, 222, 86, 20);
+		txtApellido.setBounds(126, 322, 86, 20);
 		add(txtApellido);
 		txtApellido.setColumns(10);
 		
 		txtDni = new JTextField();
-		txtDni.setBounds(212, 222, 86, 20);
+		txtDni.setBounds(217, 322, 86, 20);
 		add(txtDni);
 		txtDni.setColumns(10);
 		
 		btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(321, 222, 89, 23);
+		btnModificar.setBounds(318, 321, 89, 23);
 		add(btnModificar);
 
 	}
