@@ -88,12 +88,16 @@ public class daoPersonaImpl implements PersonaDao {
 	public ArrayList<Persona> GetAll() {
 		// TODO Auto-generated method stub
 		System.out.println("Inicia daoPersonaImpl.GetAll");
-		PreparedStatement st;
+		
 		ResultSet rst;
 		ArrayList<Persona> pers = new ArrayList<Persona>();
-		Conexion cn = Conexion.getConexion();
+		Connection cn = null;
+		
+		
 		try {
-			st = cn.getSQLConexion().prepareStatement(obtenerTodos);
+			cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdpersonas","root","root");
+			cn.setAutoCommit(false);		
+			PreparedStatement st = cn.prepareStatement(obtenerTodos);
 			rst = st.executeQuery();
 			while(rst.next()) 
 			{

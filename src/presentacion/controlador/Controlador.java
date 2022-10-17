@@ -211,7 +211,7 @@ public class Controlador implements ActionListener {
 		PersonaNegocio Pnego = new PersonaNegocioImpl();
 		ArrayList<Persona> Personas = (ArrayList<Persona>) Pnego.GetAll();
 		DefaultListModel<Persona> dlmodel =  (DefaultListModel<Persona>) panel.getListPersona().getModel();
-		
+		dlmodel.clear();
 		for (Persona Perso : Personas) {
 			
 			dlmodel.addElement(Perso);			
