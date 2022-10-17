@@ -24,8 +24,14 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 
 	@Override
 	public boolean delete(Persona personaBorrar) {
-		// TODO Auto-generated method stub
-		return false;
+		System.out.println("Inicia PersonaNegocioImpl.Delete Persona");
+		boolean estado = pdao.delete(personaBorrar);
+		/*if(estado == true) {
+			//System.out.println("Negocio");
+			estado= true;
+		}*/
+		System.out.println("Fin PersonaNegocioImpl.Delete Persona");
+		return estado;
 	}
 
 	@Override

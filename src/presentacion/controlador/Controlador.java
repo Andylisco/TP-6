@@ -24,6 +24,7 @@ public class Controlador implements ActionListener {
 	private PersonaNegocio persoNeg;
 	private ArrayList<Persona> PersonasEnTablas;
 	private pnl_Agregar PanelAgregar;
+	private pnl_Eliminar PanelEliminar;
 	
 
 	
@@ -63,6 +64,10 @@ public class Controlador implements ActionListener {
 				PanelAgregar.add(lblDni);
 				
 				this.ventanaPrinci.getJMenuBar().getMenu(0).getItem(0).addActionListener(a -> VentanaMenuAgregar(a));
+				
+				this.PanelEliminar.getBtnEliminar().addActionListener(a -> Click_btnEliminar(a));
+				
+				
 				this.ventanaPrinci.getJMenuBar().getMenu(0).getItem(1).addActionListener(m -> VentanaMenuModificar(m));
 				this.ventanaPrinci.getJMenuBar().getMenu(0).getItem(2).addActionListener(e -> VentanaMenuEliminar(e));
 				this.ventanaPrinci.getJMenuBar().getMenu(0).getItem(3).addActionListener(l -> VentanaMenuListar(l));
@@ -102,6 +107,28 @@ public class Controlador implements ActionListener {
 		}
 		
 		System.out.println("FIN Controlador.Click_btnAceptar");
+	}
+	
+	private void Click_btnEliminar(ActionEvent a) {
+		String mensaje;
+		System.out.println("Inicia Controlador.Click_btnEliminar");
+		try {
+			// se obtiene el mensaje para mostrar en pantalla se llama a la funcion validacionesBtnAceptar
+			mensaje = this.validacionesBtnAceptar(PanelAgregar.getTxtDni().getText(),
+					PanelAgregar.getTxtNombre().getText(), 
+					PanelAgregar.getTxtApellido().getText());
+			//muesta mensaje en pantalla 
+			this.ventanaPrinci.mostrarMensaje(mensaje);
+			// limpia txt
+			PanelAgregar.getTxtDni().setText("");
+			PanelAgregar.getTxtNombre().setText(""); 
+			PanelAgregar.getTxtApellido().setText("");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("FIN Controlador.Click_btnEliminar");
 	}
 
 	private void VentanaMenuModificar(ActionEvent m)

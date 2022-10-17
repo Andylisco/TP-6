@@ -13,6 +13,7 @@ import dao.PersonaDao;
 public class daoPersonaImpl implements PersonaDao {
 
 	public static final String insert ="Insert into personas(Dni,Nombre,Apellido) values(?,?,?)"; 
+	public static final String delete ="Delete from personas where dni=?"; 
 	public static final String buscaDNI = "Select dni from personas where dni = ";
 	public static final String obtenerTodos = "Select * from personas";
 	@Override
@@ -51,7 +52,34 @@ public class daoPersonaImpl implements PersonaDao {
 	@Override
 	public boolean delete(Persona personaBorrar) {
 		// TODO Auto-generated method stub
-		return false;
+		
+		System.out.println("Inicia daoPersonaImpl.Delete Persona ");
+		PreparedStatement pst ;
+		boolean personaEliminada = false;
+		Connection cn = Conexion.getConexion().getSQLConexion();
+		try {
+			//System.out.println("mod4");
+			pst = cn.prepareStatement(delete);
+			//System.out.println(persona.toString());
+			pst.setString(1, personaBorrar.getDni());
+			
+			if(pst.executeUpdate() > 0)
+			{
+				cn.commit();
+				personaEliminada = true;
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				cn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		System.out.println("FIN daoPersonaImpl.Delete Persona ");
+		return personaEliminada;	
 	}
 
 	@Override
