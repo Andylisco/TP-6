@@ -9,6 +9,7 @@ import Entidad.Persona;
 
 public interface PersonaDao {
 	public boolean insert(Persona persona);
+	public boolean Update(Persona persona);
 	public boolean delete(Persona personaBorrar);
 	public ArrayList<Persona> GetAll();
 	public Persona obtenerDni(ResultSet resultSet)throws SQLException;

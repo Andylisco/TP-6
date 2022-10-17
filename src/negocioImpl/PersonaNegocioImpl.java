@@ -53,4 +53,13 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 		return existe;
 	}
 
+	@Override
+	public boolean Update(Persona persona) {
+		System.out.println("Inicia PersonaNegocioImpl.Update Persona");
+		boolean estado =false;
+		estado = pdao.Update(persona);		
+		System.out.println("Fin PersonaNegocioImpl.Update Persona");
+		return estado;
+	}
+
 }

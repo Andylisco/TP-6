@@ -1,5 +1,6 @@
 package daoImpl;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import dao.PersonaDao;
 public class daoPersonaImpl implements PersonaDao {
 
 	public static final String insert ="Insert into personas(Dni,Nombre,Apellido) values(?,?,?)"; 
+	public static final String update ="UPDATE personas SET Nombre=? , Apellido=? WHERE Dni=?"; 
 	public static final String delete ="Delete from personas where dni=?"; 
 	public static final String buscaDNI = "Select dni from personas where dni = ";
 	public static final String obtenerTodos = "Select * from personas";
@@ -145,5 +147,45 @@ public class daoPersonaImpl implements PersonaDao {
 		}
 		System.out.println("FIN daoPersonaImpl.ExisteDni");
 		return existe;
+	}
+
+	@Override
+	public boolean Update(Persona persona) {
+		// 
+				System.out.println("Inicia daoPersonaImpl.Update Persona ");
+				boolean personaModificada = false;
+						  	
+				Connection cn = null;
+				
+				
+				try {
+					cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdpersonas","root","root");
+					cn.setAutoCommit(false);
+					
+					System.out.println("Conecto");
+					//System.out.println("mod4");
+					PreparedStatement pst = cn.prepareStatement(update);
+					//System.out.println(persona.toString());
+					pst.setString(1, persona.getNombre());
+					pst.setString(2, persona.getApellido());
+					pst.setString(3, persona.getDni());
+					if(pst.executeUpdate() > 0)
+					{
+						cn.commit();
+						personaModificada = true;
+					}
+				} 
+				catch (SQLException e) 
+				{
+					e.printStackTrace();
+					try {
+						cn.rollback();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
+				System.out.println("FIN daoPersonaImpl.Update  Persona ");
+				return personaModificada;
 	}
 }

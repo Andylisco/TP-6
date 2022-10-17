@@ -50,6 +50,8 @@ public class Controlador implements ActionListener {
 				this.PanelModificar = new pnl_Modificar();
 				this.PanelListar = new pnl_Listar();
 				
+				this.PanelModificar.getBtnModificar().addActionListener(bm -> Click_btnAceptarModificar(bm));
+				
 				PanelAgregar.getTxtApellido().addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyTyped(KeyEvent e) {
@@ -92,17 +94,75 @@ public class Controlador implements ActionListener {
 				//Eventos PanelAgregarPersonas
 				 this.PanelAgregar.getBtnAceptar().addActionListener(a -> Click_btnAceptar(a));
 				//ventanaPrinci.setVisible(true);		
-				 
-				 
-				 
-				 				 
 				
-				this.PanelModificar.getBtnModificar().addActionListener(m -> Click_btnAceptar(m));
-				 
+			
+				
+					
 				
 	}
 	
 	
+
+	private void Click_btnAceptarModificar(ActionEvent bm) {
+		System.out.println("Inicia Controlador.Click_btnAceptarModificar");
+		PersonaNegocio Pnego= new PersonaNegocioImpl() ;
+		try {
+			// se obtiene el mensaje para mostrar en pantalla se llama a la funcion validacionesBtnAceptar
+			String mensaje = this.validacionesBtnModificar(PanelModificar.getTxtDni().getText(),
+					PanelModificar.getTxtNombre().getText(), 
+					PanelModificar.getTxtApellido().getText());
+			//muesta mensaje en pantalla 
+			if (mensaje == "")
+			{
+				Persona P = new Persona(PanelModificar.getTxtDni().getText(), 
+										PanelModificar.getTxtNombre().getText(),
+										PanelModificar.getTxtApellido().getText());
+				System.out.println(P);
+				if (Pnego.Update(P)) 
+				{	
+					this.ventanaPrinci.mostrarMensaje(mensaje = "Se modifico correctamente");
+				}else 
+					{
+					this.ventanaPrinci.mostrarMensaje("No se pudo actualizar el registro.");
+					}
+			}else{
+				this.ventanaPrinci.mostrarMensaje(mensaje);				
+			}
+			
+			
+			
+			this.ventanaPrinci.getContentPane().removeAll();			
+			pnl_Modificar panel = this.PanelModificar;		
+			PersonaNegocio Pnegos = new PersonaNegocioImpl();
+			ArrayList<Persona> Personas = (ArrayList<Persona>) Pnegos.GetAll();
+			DefaultListModel<Persona> dlmodel =  (DefaultListModel<Persona>) panel.getListPersona().getModel();
+			for (Persona Perso : Personas) {
+				
+				dlmodel.addElement(Perso);			
+			}
+			
+			
+			panel.setDlModel(dlmodel);		
+		
+			
+			this.ventanaPrinci.getContentPane().add(panel);
+			this.ventanaPrinci.getContentPane().repaint();
+			this.ventanaPrinci.getContentPane().revalidate();
+			/*
+			// limpia txt
+			PanelModificar.getTxtDni().setText("");
+			PanelModificar.getTxtNombre().setText(""); 
+			PanelModificar.getTxtApellido().setText("");
+			*/
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("FIN Controlador.Click_btnAceptar");
+	}
+
+
 
 	private void VentanaMenuAgregar(ActionEvent a)
 	{
@@ -162,7 +222,7 @@ public class Controlador implements ActionListener {
 		
 		this.ventanaPrinci.getContentPane().removeAll();
 		
-		pnl_Modificar panel = new pnl_Modificar();
+		pnl_Modificar panel = this.PanelModificar;
 		
 		
 		PersonaNegocio Pnego = new PersonaNegocioImpl();
@@ -175,7 +235,8 @@ public class Controlador implements ActionListener {
 		}
 		
 		
-		panel.setDlModel(dlmodel);				
+		panel.setDlModel(dlmodel);		
+	
 		
 		this.ventanaPrinci.getContentPane().add(panel);
 		this.ventanaPrinci.getContentPane().repaint();
@@ -315,6 +376,48 @@ public class Controlador implements ActionListener {
 		}
 		
 		System.out.println("FIN Controlador.validacionesBtnAceptar");
+
+		return mensaje;
+	}
+	
+	
+	public String validacionesBtnModificar(String txtDni, String txtNombre, String txtApellido) {
+		String mensaje = "";
+		System.out.println("Inicia Controlador.validacionesBtnModificar");
+		PersonaNegocio Pnego= new PersonaNegocioImpl() ;
+		boolean blPersona = false;
+		boolean validaDni = false;
+		try {
+				if(txtNombre.isEmpty()&& txtApellido.isEmpty()&& txtDni.isEmpty()) 
+				{
+					return mensaje = "complete todos los campos faltan ";
+					
+				}else
+					{								
+						String nombre = txtNombre;		
+						String apellido = txtApellido;
+						if (!txtDni.matches("^[0-9]*$")) 
+						{
+							return mensaje = "INGRESE SOLO NUMEROS";								
+						}	
+						else 
+						{			
+							validaDni = Pnego.obtenerDni(txtDni);
+							if (!validaDni) 
+							{
+								System.out.println("DNi no existe");
+								return mensaje = "El Dni debe existir para poder modificarse";
+							}					
+							
+											
+						}
+					}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("FIN Controlador.validacionesBtnModificar");
 
 		return mensaje;
 	}
