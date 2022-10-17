@@ -131,7 +131,6 @@ public class daoPersonaImpl implements PersonaDao {
 			ps = cn.prepareStatement(obtenerTodos);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				System.out.println("Ingresa while");
 				valorBase = Integer.parseInt(rs.getString(1));
 				if(valorBase == Integer.parseInt(dni)) {
 					System.out.println("SON IGUALES");

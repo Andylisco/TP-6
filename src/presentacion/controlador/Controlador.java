@@ -45,6 +45,7 @@ public class Controlador implements ActionListener {
 				this.persoNeg = pNeg;
 				//Instancio los paneles
 				this.PanelAgregar = new pnl_Agregar();
+
 				this.PanelEliminar = new pnl_Eliminar();
 				this.PanelModificar = new pnl_Modificar();
 				this.PanelListar = new pnl_Listar();
