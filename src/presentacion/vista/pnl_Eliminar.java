@@ -32,42 +32,28 @@ public class pnl_Eliminar extends JPanel {
 
 	private DefaultListModel<ArrayList> DlModel;
 	private JButton btnEliminar;
-	private JTable table;
 	private DefaultTableModel modelPersonas;
 	private String[] nombreColumnas = {"DNI","NOMBRE","APELLIDO"};
 	/**
 	 * Create the panel.
 	 */
 	public pnl_Eliminar() {
-		setLayout(null);
 		modelPersonas = new DefaultTableModel(null,nombreColumnas);
+		setLayout(null);
 		JLabel lblEliminar = new JLabel("Eliminar usuarios");
 		lblEliminar.setBounds(53, 16, 228, 21);
 		lblEliminar.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblEliminar);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(53, 62, 406, 169);
-		add(panel);
-		panel.setLayout(null);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 406, 169);
-		panel.add(scrollPane);
-		
-		table = new JTable(modelPersonas);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"DNI", "NOMBRE", "APELLIDO"
-			}
-		));
-		scrollPane.setViewportView(table);
-		
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.setBounds(190, 262, 157, 23);
 		add(btnEliminar);
+		
+		JList list = new JList();
+		list.setBounds(59, 234, 288, -180);
+		list.setBackground(Color.WHITE);
+		list.setBorder(new LineBorder(new Color(0, 0, 0)));
+		add(list);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent a) {
 				//DlModel.remove(ListUsuarios.getSelectedIndex());
@@ -87,9 +73,7 @@ public class pnl_Eliminar extends JPanel {
 	public void setDlModel(DefaultListModel<ArrayList> dlModel) {
 		DlModel = dlModel;
 	}
-	public JTable getTable() {
-		return table;
-	}
+
 	public void llenarTabla(List<Persona> personasEnTabla) {
 		this.getModelPersonas().setRowCount(0); //Para vaciar la tabla
 		this.getModelPersonas().setColumnCount(0);
