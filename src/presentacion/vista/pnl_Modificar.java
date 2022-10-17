@@ -2,17 +2,23 @@ package presentacion.vista;
 
 import javax.swing.JPanel;
 
+
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
+
+import Entidad.Persona;
+
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class pnl_Modificar extends JPanel {
 
-	private DefaultListModel<ArrayList> DlModel;
+	private DefaultListModel<Persona> DlModel;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
 	private JTextField txtDni;
@@ -29,9 +35,21 @@ public class pnl_Modificar extends JPanel {
 		lblModificar.setBounds(20, 25, 299, 19);
 		add(lblModificar);
 		
+		DlModel = new DefaultListModel();
 		listPersona = new JList();
+		listPersona.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Persona PersonaSeleccionada = (Persona) listPersona.getSelectedValue();
+				
+				txtNombre.setText(PersonaSeleccionada.getNombre());
+				txtApellido.setText(PersonaSeleccionada.getApellido());
+				txtDni.setText(PersonaSeleccionada.getDni());
+			}
+		});
 		listPersona.setBounds(20, 40, 420, 171);
 		add(listPersona);
+		listPersona.setModel(DlModel);
 		
 		txtNombre = new JTextField();
 		txtNombre.setBounds(20, 222, 86, 20);
@@ -54,7 +72,47 @@ public class pnl_Modificar extends JPanel {
 
 	}
 
-	public void setDlModel(DefaultListModel<ArrayList> dlModel) {
+	public JTextField getTxtNombre() {
+		return txtNombre;
+	}
+
+	public void setTxtNombre(JTextField txtNombre) {
+		this.txtNombre = txtNombre;
+	}
+
+	public JTextField getTxtApellido() {
+		return txtApellido;
+	}
+
+	public void setTxtApellido(JTextField txtApellido) {
+		this.txtApellido = txtApellido;
+	}
+
+	public JTextField getTxtDni() {
+		return txtDni;
+	}
+
+	public void setTxtDni(JTextField txtDni) {
+		this.txtDni = txtDni;
+	}
+
+	public JButton getBtnModificar() {
+		return btnModificar;
+	}
+
+	public void setBtnModificar(JButton btnModificar) {
+		this.btnModificar = btnModificar;
+	}
+
+	public JList getListPersona() {
+		return listPersona;
+	}
+
+	public void setListPersona(JList listPersona) {
+		this.listPersona = listPersona;
+	}
+
+	public void setDlModel(DefaultListModel<Persona> dlModel) {
 		DlModel = dlModel;
 	}
 }

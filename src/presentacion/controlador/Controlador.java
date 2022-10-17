@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ import presentacion.vista.pnl_Listar;
 import presentacion.vista.pnl_Modificar;
 import negocio.PersonaNegocio;
 import negocioImpl.PersonaNegocioImpl;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -88,6 +92,12 @@ public class Controlador implements ActionListener {
 				 this.PanelAgregar.getBtnAceptar().addActionListener(a -> Click_btnAceptar(a));
 				//ventanaPrinci.setVisible(true);		
 				 
+				 
+				 
+				 				 
+				
+				this.PanelModificar.getBtnModificar().addActionListener(m -> Click_btnAceptar(m));
+				 
 				
 	}
 	
@@ -150,10 +160,22 @@ public class Controlador implements ActionListener {
 	{
 		
 		this.ventanaPrinci.getContentPane().removeAll();
-			
+		
 		pnl_Modificar panel = new pnl_Modificar();
 		
-		panel.setDlModel(this.ventanaPrinci.getDlModel());
+		
+		PersonaNegocio Pnego = new PersonaNegocioImpl();
+		ArrayList<Persona> Personas = (ArrayList<Persona>) Pnego.GetAll();
+		DefaultListModel<Persona> dlmodel =  (DefaultListModel<Persona>) panel.getListPersona().getModel();
+		
+		for (Persona Perso : Personas) {
+			
+			dlmodel.addElement(Perso);			
+		}
+		
+		
+		panel.setDlModel(dlmodel);				
+		
 		this.ventanaPrinci.getContentPane().add(panel);
 		this.ventanaPrinci.getContentPane().repaint();
 		this.ventanaPrinci.getContentPane().revalidate();
@@ -199,8 +221,7 @@ public class Controlador implements ActionListener {
 		this.ventanaPrinci.getContentPane().add(panel);
 		this.ventanaPrinci.getContentPane().repaint();
 		this.ventanaPrinci.getContentPane().revalidate();
-		
-					
+						
 		
 	
 		
@@ -296,4 +317,6 @@ public class Controlador implements ActionListener {
 
 		return mensaje;
 	}
+
+
 }
