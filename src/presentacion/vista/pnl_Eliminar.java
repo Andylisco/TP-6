@@ -32,13 +32,14 @@ public class pnl_Eliminar extends JPanel {
 
 	private DefaultListModel<ArrayList> DlModel;
 	private JButton btnEliminar;
-	private DefaultTableModel modelPersonas;
-	private String[] nombreColumnas = {"DNI","NOMBRE","APELLIDO"};
+	//private DefaultTableModel modelPersonas;
+	private JList  ListPersonas;
+	
 	/**
 	 * Create the panel.
 	 */
 	public pnl_Eliminar() {
-		modelPersonas = new DefaultTableModel(null,nombreColumnas);
+		//modelPersonas = new DefaultTableModel(null,nombreColumnas);
 		setLayout(null);
 		JLabel lblEliminar = new JLabel("Eliminar usuarios");
 		lblEliminar.setBounds(53, 16, 228, 21);
@@ -46,14 +47,12 @@ public class pnl_Eliminar extends JPanel {
 		add(lblEliminar);
 		
 		btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(190, 262, 157, 23);
+		btnEliminar.setBounds(112, 248, 157, 23);
 		add(btnEliminar);
 		
-		JList list = new JList();
-		list.setBounds(59, 234, 288, -180);
-		list.setBackground(Color.WHITE);
-		list.setBorder(new LineBorder(new Color(0, 0, 0)));
-		add(list);
+		ListPersonas = new JList();
+		ListPersonas.setBounds(53, 48, 294, 189);
+		add(ListPersonas);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent a) {
 				//DlModel.remove(ListUsuarios.getSelectedIndex());
@@ -69,12 +68,20 @@ public class pnl_Eliminar extends JPanel {
 	public void setBtnEliminar(JButton btnEliminar) {
 		this.btnEliminar = btnEliminar;
 	}
+	
+	public JList getJList() {
+		return ListPersonas;
+	}
 
+	public DefaultListModel<ArrayList> getDlModel() {
+		return DlModel;
+	}
+	
 	public void setDlModel(DefaultListModel<ArrayList> dlModel) {
 		DlModel = dlModel;
 	}
 
-	public void llenarTabla(List<Persona> personasEnTabla) {
+	/*public void llenarTabla(List<Persona> personasEnTabla) {
 		this.getModelPersonas().setRowCount(0); //Para vaciar la tabla
 		this.getModelPersonas().setColumnCount(0);
 		this.getModelPersonas().setColumnIdentifiers(this.getNombreColumnas());
@@ -93,7 +100,7 @@ public class pnl_Eliminar extends JPanel {
 	private String[] getNombreColumnas() {
 		// TODO Auto-generated method stub
 		return nombreColumnas;
-	}
+	}*/
 
 	private DefaultTableModel getModelPersonas() {
 		// TODO Auto-generated method stub

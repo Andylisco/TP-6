@@ -25,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class Controlador implements ActionListener {
@@ -170,21 +172,22 @@ public class Controlador implements ActionListener {
 		System.out.println("FIN Controlador.Click_btnAceptar");
 	}
 	
-	private void Click_btnEliminar(ActionEvent a) {
-		String mensaje;
+	private void Click_btnEliminar(ActionEvent a) {		
 		System.out.println("Inicia Controlador.Click_btnEliminar");
 		try {
-			// se obtiene el mensaje para mostrar en pantalla se llama a la funcion validacionesBtnAceptar
-			mensaje = this.validacionesBtnAceptar(PanelAgregar.getTxtDni().getText(),
-					PanelAgregar.getTxtNombre().getText(), 
-					PanelAgregar.getTxtApellido().getText());
-			//muesta mensaje en pantalla 
-			this.ventanaPrinci.mostrarMensaje(mensaje);
-			// limpia txt
-			PanelAgregar.getTxtDni().setText("");
-			PanelAgregar.getTxtNombre().setText(""); 
-			PanelAgregar.getTxtApellido().setText("");
+			PersonaNegocio Pnego = new PersonaNegocioImpl();
+			Persona P = new Persona((PanelEliminar.getDlModel().getElementAt(PanelEliminar.getJList().getSelectedIndex()).toString()));
+			
+			if (Pnego.delete(P)) 
+			{	
+				this.ventanaPrinci.mostrarMensaje("Se elimino correctamente");
+			}else 
+				{
+				this.ventanaPrinci.mostrarMensaje("No se pudo eliminar la persona.");
+				}
+			
 		}
+		
 		catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -219,10 +222,36 @@ public class Controlador implements ActionListener {
 		
 		this.ventanaPrinci.getContentPane().removeAll();
 			
-		pnl_Eliminar panel = new pnl_Eliminar();
+		//pnl_Eliminar panel = new pnl_Eliminar();
 		
-		panel.setDlModel(this.ventanaPrinci.getDlModel());
-		this.ventanaPrinci.getContentPane().add(panel);
+		DefaultListModel<ArrayList> dlmodel =  (DefaultListModel<ArrayList>) PanelEliminar.getJList().getModel();
+		
+		
+		PanelEliminar.getJList().addListSelectionListener(new ListSelectionListener() {
+	    @Override
+		public void valueChanged(ListSelectionEvent e) {
+	    	
+	    	if((PanelEliminar.getJList().getSelectedIndex())!=1) {
+	    			
+	    		PanelEliminar.getDlModel().remove(PanelEliminar.getJList().getSelectedIndex());
+	    	}
+	    }				
+		} );
+		
+		this.ventanaPrinci.getContentPane().removeAll();
+		
+		PersonaNegocio Pnego = new PersonaNegocioImpl();
+		Persona P= new Persona();
+		
+		
+		dlmodel.clear();
+		
+		dlmodel.removeElement(P);			
+			
+		PanelEliminar.setDlModel(dlmodel);
+		
+		//panel.setDlModel(this.ventanaPrinci.getDlModel());
+		this.ventanaPrinci.getContentPane().add(PanelEliminar);
 		this.ventanaPrinci.getContentPane().repaint();
 		this.ventanaPrinci.getContentPane().revalidate();
 		//this.refrescarTabla();
@@ -303,6 +332,56 @@ public class Controlador implements ActionListener {
 		}
 		
 		System.out.println("FIN Controlador.validacionesBtnAceptar");
+
+		return mensaje;
+	}
+	
+	public String validacionesBtnEliminar(String txtDni) {
+		String mensaje = "";
+		System.out.println("Inicia Controlador.validacionesBtnEliminar");
+		PersonaNegocio Pnego= new PersonaNegocioImpl() ;
+		boolean blPersona = false;
+		boolean validaDni = false;
+		try {
+				if(txtDni.isEmpty()) 
+				{
+					return mensaje = "Seleccione persona a eliminar " ;
+				}
+				else {
+					validaDni = Pnego.obtenerDni(txtDni);
+					if (!validaDni) 
+					{
+						System.out.println("DNi no existe");
+						return mensaje = "No existe el dni, no se pudo eliminar Persona";
+					}	
+					else 
+					{
+						blPersona = true;
+						System.out.println("No Existe Dni");
+					}
+					if (blPersona) 
+					{
+					String dni = txtDni;				
+					Persona P = new Persona(dni);	
+						if (Pnego.delete(P)) 
+						{	
+							return mensaje = "Se Elimino correctamente";
+						}
+						else 
+						{
+							return mensaje = "complete todos los campos faltan";
+						}
+					}
+				}
+			
+               }
+               catch(Exception e) {
+             e.printStackTrace();
+              }
+				
+			
+							
+		System.out.println("FIN Controlador.validacionesBtnEliminar");
 
 		return mensaje;
 	}
